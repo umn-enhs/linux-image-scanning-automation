@@ -32,9 +32,6 @@ if [ "${participant_id}" != "" ]; then
 		nextnum=$(($lastscan + 1))
 	fi
 
-	zenity --warning \
-		--text="Last Scan: ${lastscan}, starting scan: ${nextnum}."
-
 	scanimage --device-name="$device" \
 		--format=tiff \
 		--batch=$filebase_%d.tif \
