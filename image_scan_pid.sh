@@ -24,12 +24,11 @@ if [ "${participant_id}" != "" ]; then
 
 	pushd ~/Scans/${participant_id} > /dev/null
 
-	lastscan=$(ls | sort | tail -n 1)
+	lastscan=$(ls | sed -e 's/.tif//' | sort -n | tail -n 1 )
 	if [ "$lastscan" == "" ]; then
 		nextnum=1
 	else
-		lastnum=$(basename $lastscan .tif)
-		nextnum=$(($lastnum + 1))
+		nextnum=$(($lastscan + 1))
 	fi
 
 	scanimage --device-name="$device" \
