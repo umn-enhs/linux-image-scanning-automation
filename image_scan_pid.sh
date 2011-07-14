@@ -25,11 +25,15 @@ if [ "${participant_id}" != "" ]; then
 	pushd ~/Scans/${participant_id} > /dev/null
 
 	lastscan=$(ls | sed -e 's/.tif//' | sort -n | tail -n 1 )
+	
 	if [ "$lastscan" == "" ]; then
 		nextnum=1
 	else
 		nextnum=$(($lastscan + 1))
 	fi
+
+	zenity --warning \
+		--text="Last Scan: ${lastscan}, starting scan: ${nextnum}."
 
 	scanimage --device-name="$device" \
 		--format=tiff \

@@ -9,6 +9,8 @@ if [ "${install_base}" == "." ];  then
 	install_base=`pwd`
 fi
 
+last_dpi=300
+
 echo "${install_base}"
 PATH="$PATH:${install_base}"
 
@@ -23,8 +25,13 @@ if [ -d $folder  ]; then
 		
 			# If it's too big, shrink it
 			file_size=$(stat -c%s $scan)
-			dpi=`tiffinfo "${scan}" | grep "Resolution:" | sed -e 's/  Resolution: //'| awk -F "," '{print $1}'` 
-			echo "DPI: ${dpi}"
+			dpi=`tiffinfo "${scan}" | grep "Resolution:" | sed -e 's/  Resolution: //' | awk -F "," '{print $1}'` 
+			if [ "$dpi" == "" ]; then
+				dpi=${last_dpi}
+			else
+				last_dpi=${dpi}
+			fi
+			
 			maxsize=$(( $dpi * $dpi * 15 ))
 			# 600 dpi = 5000000
 			# 300 dpi = 1250000

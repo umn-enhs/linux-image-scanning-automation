@@ -4,7 +4,6 @@ idname="Participant ID"
 default="05-XXXXX-X"
 last_id=`cat ~/.last_scan_id`
 
-
 install_base=`dirname "$0"`
 
 echo $install_base
@@ -23,6 +22,7 @@ if [ "${identifier}" == "${default}" ]; then
 elif [ "${identifier}" != "" ]; then
 	echo "Getting ready to scan for ${idname}: ${identifier}"
 	echo ${identifier} > ~/.last_scan_id
+
 	./image_scan_pid.sh ${identifier}_clinic flatbed
 fi
 
