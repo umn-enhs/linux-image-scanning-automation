@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=file-roller
+Name[en_US]=Clinic Chart from Feeder
+Exec=/home/aaron/bin/image-scanning/scan_clinic_feeder.sh
+Name=Scan from Feeder
+Icon=file-roller
