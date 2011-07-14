@@ -4,6 +4,13 @@
 # Manual rotation should be done before this runs.
 
 folder="$1"
+install_base=`dirname "$0"`
+if [ "${install_base}" == "." ];  then
+	install_base=`pwd`
+fi
+
+echo "${install_base}"
+PATH="$PATH:${install_base}"
 
 if [ -d $folder  ]; then
 
@@ -15,10 +22,10 @@ if [ -d $folder  ]; then
 		for scan in *.tif; do
 		
 			# If it's too big, shrink it
-			
 			file_size=$(stat -c%s $scan)
 			if ((( $file_size > 5000000 ))); then
-				mogrify -monochrome $scan
+				echo "Compressing huge image..."
+				nice mogrify -monochrome $scan
 			fi
 		
 		
@@ -37,8 +44,8 @@ if [ -d $folder  ]; then
                 echo "  Straigtening..."
                 image_deskew.sh "$scan"
                 # OCR
-                echo "  Extracting text..."
-                image_ocr.sh all "$scan"
+                # echo "  Extracting text..."
+                # image_ocr.sh all "$scan"
                 
                 # Thumbnail
                 echo "  Creating thumbnail..."

@@ -46,7 +46,7 @@ if [ -f "${scan}" ]; then
     fi
     trash_folder=${scan_folder}/${sub_folder}
 
-    convert $scan -fill white \
+    nice convert $scan -fill white \
         -draw "circle $right_top" \
         -draw "circle $right_bottom" \
         -draw "circle $left_top" \

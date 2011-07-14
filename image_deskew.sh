@@ -29,7 +29,7 @@ if [ -e "${scan}" ]; then
     # Only de-skew files once.
     if [ "${deskewed}" == "0" ]; then
         # Find the skew
-        skew=`tiff_findskew $scan`
+        skew=`nice tiff_findskew $scan`
 
         echo "${scanfile} ${skew}" >> "${skew_log}"
 

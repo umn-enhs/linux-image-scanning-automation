@@ -20,7 +20,7 @@ if [ -f "$scan" ]; then
 	    thumbname="`basename $scan .tif`.png"
 
         if [ ! -f "${thumb_folder}/${thumbname}" ]; then
-            convert "${scan}" -resize 320x320 -quality 90 -format png "${thumb_folder}/${thumbname}"
+            nice gm convert "${scan}" -resize 320x320 -quality 90 -format png "${thumb_folder}/${thumbname}"
 	    fi
     popd > /dev/null
 fi
