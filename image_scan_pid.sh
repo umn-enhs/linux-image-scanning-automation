@@ -4,6 +4,7 @@ participant_id="$1"
 today=`date +%Y-%m-%d`
 device="fujitsu:fi-6240dj:5826"
 source="ADF Duplex"
+dpi=300
 
 if [ "$2" == "flatbed" ]; then
 	source="Flatbed"
@@ -37,9 +38,14 @@ if [ "${participant_id}" != "" ]; then
 		--batch-increment=1 \
 		--batch-start $nextnum \
 		--progress \
-		--resolution=600dpi \
+		--resolution=${dpi}dpi \
 		--source="${source}" \
 		--mode="Lineart"
-		
+	
+	file_size=$(stat -c%s $nextnum.tif)
+	
+	echo $file_size > ~/.last_scan_size
+	
+	
 	popd > /dev/null
 fi

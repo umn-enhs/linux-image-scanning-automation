@@ -22,6 +22,7 @@ if [ "${identifier}" == "${default}" ]; then
 elif [ "${identifier}" != "" ]; then
 	echo "Getting ready to scan for ${idname}: ${identifier}"
 	echo ${identifier} > ~/.last_scan_id
+	mkdir -p ~/Scans/${identifier}_master/
 	nautilus ~/Scans/${identifier}_clinic/
 	./image_scan_pid.sh ${identifier}_clinic
 fi

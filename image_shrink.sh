@@ -10,11 +10,13 @@ if [ -f "$scan" ]; then
 
 	# If it's too big, shrink it
 	file_size=$(stat -c%s $scan)
-	if ((( $file_size > 1000000 ))); then
+	dpi=`tiffinfo "${scan}" | grep "Resolution:" | sed -e 's/  Resolution: //'| awk -F "," '{print $1}'` 
+	echo "DPI: ${dpi}"
+	maxsize=$(( $dpi * $dpi * 2 ))
+	if ((( $file_size > $maxsize ))); then
 		compression=`tiffinfo "${scan}" | grep "Compression Scheme" | awk -F ": " '{print $2}'` 
 	
 		if [ "${compression}" != "LZW" ]; then
-		    
 		    nice mogrify -compress lzw "${scan}"
 		fi
 	fi

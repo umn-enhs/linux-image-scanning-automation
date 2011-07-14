@@ -4,14 +4,16 @@
 
 scan="$1"
 
-left=250
-right=4830
-upper=2490
-lower=4150
-radius=120
+dpi=`tiffinfo "${scan}" | grep "Resolution:" | sed -e 's/  Resolution: //'| awk -F "," '{print $1}'` 
 
-center_left
-center_right
+left=$(( $dpi / 60 * 25 ))
+right=$(( $dpi / 60 * 483 ))
+upper=$(( $dpi / 60 * 249 ))
+lower=$(( $dpi / 60 * 415 ))
+radius=$(( $dpi / 60 * 12 ))
+
+shave=$(( $dpi / 4 ))
+
 right_top="${right},${upper} $((right+radius)),$((upper+radius))"
 right_bottom="${right},${lower} $((right+radius)),$((lower+radius))"
 left_top="${left},${upper} $((left+radius)),$((upper+radius))"
@@ -22,7 +24,7 @@ mogrify -fill white \
 	-draw "circle $right_bottom" \
 	-draw "circle $left_top" \
 	-draw "circle $left_bottom" \
-	-shave 150x150 \
+	-shave ${shave}x${shave} \
 	-type BiLevel \
 	$scan
 

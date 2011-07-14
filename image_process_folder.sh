@@ -23,7 +23,12 @@ if [ -d $folder  ]; then
 		
 			# If it's too big, shrink it
 			file_size=$(stat -c%s $scan)
-			if ((( $file_size > 5000000 ))); then
+			dpi=`tiffinfo "${scan}" | grep "Resolution:" | sed -e 's/  Resolution: //'| awk -F "," '{print $1}'` 
+			echo "DPI: ${dpi}"
+			maxsize=$(( $dpi * $dpi * 15 ))
+			# 600 dpi = 5000000
+			# 300 dpi = 1250000
+			if ((( $file_size > $maxsize ))); then
 				echo "Compressing huge image..."
 				nice mogrify -monochrome $scan
 			fi
