@@ -13,7 +13,7 @@ pushd "${install_base}" > /dev/null
 identifier=`zenity --entry \
 	--title="Scan for ${idname}" \
 	--text="Please Enter the ${idname}" \
-	--entry-text="${last_id}"`
+	--entry-text="${default}"`
 
 if [ "${identifier}" == "${default}" ]; then
 	zenity --warning \

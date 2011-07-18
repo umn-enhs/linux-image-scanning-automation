@@ -40,6 +40,7 @@ if [ "${participant_id}" != "" ]; then
 		--progress \
 		--resolution=${dpi}dpi \
 		--source="${source}" \
+		--threshold=100 \
 		--mode="Lineart"
 	
 	file_size=$(stat -c%s $nextnum.tif)
