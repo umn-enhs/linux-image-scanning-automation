@@ -2,7 +2,7 @@
 
 
 
-pagetools=~/Downloads/pagetools-0.1.tar.gz
+pagetools=lib/pagetools-0.1.tar.gz
 
 if [ -e $pagetools ]; then
 
@@ -21,6 +21,7 @@ if [ -e $pagetools ]; then
 
 	if [ ! -e /usr/bin/tiff_findskew ] || [ ! -e /usr/bin/pbm_findskew ]; then
 		mkdir ~/Downloads/pagetools
+		cp "$pagetools" ~/Downloads
 		pushd ~/Downloads/pagetools
 	
 		tar -xvzf $pagetools
