@@ -22,9 +22,10 @@ if [ -e $pagetools ]; then
 	if [ ! -e /usr/bin/tiff_findskew ] || [ ! -e /usr/bin/pbm_findskew ]; then
 		mkdir ~/Downloads/pagetools
 		cp "$pagetools" ~/Downloads
+		cwd=`pwd`
 		pushd ~/Downloads/pagetools
 	
-		tar -xvzf $pagetools
+		tar -xvzf "$cwd/$pagetools"
 		make
 		sudo cp tiff_findskew/tiff_findskew /usr/bin/
 		sudo cp pbm_findskew/pbm_findskew /usr/bin/
