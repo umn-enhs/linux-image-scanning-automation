@@ -21,7 +21,7 @@ while read device; do
 		fi
 		
 		if [ -d "$device/nlst-scans" ]; then
-			rsync -rt /var/lib/scans/ "$device/nlst-scans/"
+			rsync -rvt /var/lib/scans/ "$device/nlst-scans/"
 		else
 			echo "Unable to create sync folder! [$syncfolder]"
 		fi
