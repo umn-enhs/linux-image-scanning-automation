@@ -2,13 +2,26 @@
 
 participant_id="$1"
 today=`date +%Y-%m-%d`
-device="fujitsu:fi-6240dj:5826"
+# NOTE: These are overwritten below.
+#device="fujitsu:fi-6240dj:5826"
+device="fujitsu:fi-6240dj:13472"
 source="ADF Duplex"
 dpi=300
 
 if [ "$2" == "flatbed" ]; then
 	source="Flatbed"
 fi
+
+if [ ! -f ~/.nlst-scan-device ]; then
+	echo "Looking for scanner, please wait..."
+	device=$(scanimage -L | sed -e 's/device `//' | sed -e "s/'.*//")
+	echo "Found device: $device"
+	echo -n "$device" > ~/.nlst-scan-device
+else
+	device=`cat ~/.nlst-scan-device`
+fi
+
+
 
 if [ "${participant_id}" != "" ]; then
 

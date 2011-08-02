@@ -39,6 +39,8 @@ if [ -e $pagetools ]; then
 	if [ ! -d /var/lib/scans ]; then
 		echo "Creating /var/lib/scans..."
 		sudo mkdir /var/lib/scans
+		sudo chown nobody:enhs-all /var/lib/scans/
+		sudo chmod 0775 /var/lib/scans/
 	fi
 
 	if [ -d /var/lib/scans ] && [ ! -h ~/Scans ]; then

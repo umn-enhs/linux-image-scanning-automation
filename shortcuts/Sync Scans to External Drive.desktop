@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon[en_US]=usb-creator-gtk
+Name[en_US]=Sync Scans to External Drive
+Exec=/usr/local/image-scanning/sync_external_drive.sh
+Name=Sync Scans to External Drive
+Icon=usb-creator-gtk

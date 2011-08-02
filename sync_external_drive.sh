@@ -21,7 +21,7 @@ while read device; do
 		fi
 		
 		if [ -d "$device/nlst-scans" ]; then
-			rsync /var/lib/scans "$device/nlst-scans/"
+			rsync -rt /var/lib/scans/ "$device/nlst-scans/"
 		else
 			echo "Unable to create sync folder! [$syncfolder]"
 		fi
@@ -31,5 +31,6 @@ while read device; do
 	fi
 	
 done < "$devices"
-
 rm -f $devices
+
+zenity --info --text="Finished syncing with external drive." &
