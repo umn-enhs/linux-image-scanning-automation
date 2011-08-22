@@ -33,4 +33,4 @@ while read device; do
 done < "$devices"
 rm -f $devices
 
-zenity --info --text="Finished syncing with external drive." &
+zenity --info --text="Finished syncing with external drive.\nPlease, now right click on the drive and choose 'Safely Remove'." &
