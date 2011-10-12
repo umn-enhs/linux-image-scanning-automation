@@ -44,6 +44,10 @@ if [ -d $folder  ]; then
             # Remove Blank Pages
             #image_isblank.sh "$scan" --delete
             image_isblank.sh "$scan"
+
+            # Remove Black Pages
+            #image_isblack.sh "$scan" --delete
+            image_isblack.sh "$scan"
             
             echo "Processing image $scan :"
 
