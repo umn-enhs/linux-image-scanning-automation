@@ -2,25 +2,19 @@
 
 scan="$1"
 
-reference=~/Scans/white_100.tif
 threshold=500
 temptif=`mktemp /tmp/temp-XXXXXX`
 difftif=`mktemp /tmp/diff-XXXXXX`
+newref=`mktemp /tmp/refi-XXXXXX`
 sub_folder=trash
 
 rm -f "$temptif"
 rm -f "$difftif"
-
-if [ ! -f ${reference} ]; then
-	convert -size 100x100 -background white -fill white xc:white ${reference}
-fi
+rm -f "$newref"
 
 temptif="$temptif.tif"
 difftif="$difftif.tif"
-
-if [ ! -f $reference ]; then
-    echo " ERROR: $reference is missing"
-fi
+newref="$newref.tif"
 
 # Removes hole-punch marks and 0.25" border from page
 left=250
@@ -58,14 +52,34 @@ if [ -f "${scan}" ]; then
         -type BiLevel \
         $temptif
 
+    temptif_size=`tiffinfo $temptif | grep "Image Width:" | cut -d " " -f 5,8 | sed -e 's/ /x/'`
+
+    #cp $temptif `basename $scan .tif`.choped-shrunk-and-deholed.tif
+    nice gm convert -size $temptif_size \
+	    -density 100x100 \
+	    -background white \
+	    -fill white xc:white ${newref}
+
     # Compare de-holed + de-bordered tiff with pure white tiff
-    black_pxl=`compare $reference $temptif -metric AE $difftif 2>&1 | head -n 1`
+    # ImageMagick version
+    black_pxl=`compare $newref $temptif -metric AE $difftif 2>&1 | head -n 1`
+    # Graphics Magick version
+    #   -metric
+    #          maximum absolute error (MAE)
+    #          mean square error (MSE)
+    #          root mean square error (RMSE)
+    #          signal to noise ratio (SNR)
+    #          peak signal to noise ratio (PSNR)
+    #black_pxl=`gm compare $newref $temptif -metric MSE $difftif 2>&1 | grep Total:`
+
+    # echo "black pixels: $black_pxl vs $threshold (threshold)"
     rm -f $difftif
     rm -f $temptif
 
     # if the number is not scientific notation, then...
     if [ "$black_pxl" == "${black_pxl/e/}" ]; then
 	    if (( $black_pxl < $threshold )); then
+		echo "$scan is a blank page."
 		    if [ "$2" == "--delete" ]; then
 			    rm -f "$scan"
 		    else
