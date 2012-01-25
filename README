@@ -1,0 +1,7 @@
+Not much for docs.
+
+Made for running on Ubuntu 11.04 / 11.10
+
+Setup the prereqs by running:
+
+./image_install_prereqs.sh
